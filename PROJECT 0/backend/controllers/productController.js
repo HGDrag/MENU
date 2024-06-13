@@ -12,7 +12,7 @@ const getAllProducts = asyncHandler(async (req, res) => {
 // route POST /api/products
 // @access private
 const createProduct = asyncHandler(async (req, res) => {
-    const { name, price } = req.body;
+    const { name, price, type } = req.body;
     const productExists = await Product.findOne({ name });
 
     if(productExists) {
@@ -20,13 +20,14 @@ const createProduct = asyncHandler(async (req, res) => {
         throw new Error('Product already exists');
     }
 
-    const product = await Product.create({ name, price });
+    const product = await Product.create({ name, price, type });
     
     if(product) {
         res.status(201).json({
             _id: product._id,
             name: product.name,
-            price: product.price
+            price: product.price,
+            type: product.type
         });
     } else {
         res.status(400);

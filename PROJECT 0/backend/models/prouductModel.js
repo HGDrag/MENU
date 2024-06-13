@@ -8,6 +8,10 @@ const productSchema = mongoose.Schema({
     price: {
         type: String,
         required: true,
+    },
+    type: {
+        type: String,
+        required: true,
     }
 }, {
     timestamps: true
