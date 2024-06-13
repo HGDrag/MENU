@@ -8,33 +8,28 @@ import Loader from '../components/Loader';
 import FormContainer from '../components/FormContainer';
 import { useCreateMutation } from '../slices/productsApiSlice';
 import { setCredentials } from '../slices/authSlice';
+import productSlice from '../slices/productSlice';
 
-const RegisterScreen = () => {
+const ProductScreen = () => {
     const [name, setName] = useState('');
     const [price, setPrice] = useState('');
     const [type, setType] = useState('');
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
+    
     const { productInfo } = useSelector((state) => state.product);
-
-    const [register, { isLoading }] = useCreateMutation();
-
-    useEffect(() => {
-        if (userInfo) {
-            navigate('/');
-        }
-    }, [navigate, userInfo]);
+    
+    const [create, { isLoading }] = useCreateMutation();
 
     const submitHandler = async (e) => {
         e.preventDefault();
-        if (password !== confirmPassword) {
-            toast.error('Passowrds do not match')
+        if (name === '' && price === '' && type === '') {
+            toast.error('Please fill all fields!')
         }else{
             try {
-                const res = await register({name, email, password}).unwrap();
-                dispatch(setCredentials({...res}));
+                const res = await create({name, price, type}).unwrap();
+                dispatch(setCredentials([...res]));
                 navigate('/');
             } catch (err) {
                 toast.error(err.data.message || err.error);
@@ -44,7 +39,7 @@ const RegisterScreen = () => {
 
     return (
         <FormContainer>
-            <h1>Sign Up</h1>
+            <h1>Create Product</h1>
 
             <Form onSubmit={ submitHandler }>
             <Form.Group className='my-2' controlId='name'> 
@@ -56,41 +51,32 @@ const RegisterScreen = () => {
                         onChange={ (e) => setName(e.target.value)}
                     ></Form.Control>
                 </Form.Group>
-                <Form.Group className='my-2' controlId='email'> 
-                    <Form.Label>Email Adress</Form.Label>
+                <Form.Group className='my-2' controlId='price'> 
+                    <Form.Label>Price</Form.Label>
                     <Form.Control 
-                        type='email'
-                        placeholder="Enter Email"
-                        value={email}
-                        onChange={ (e) => setEmail(e.target.value)}
+                        type='number'
+                        placeholder="Enter Price"
+                        value={price}
+                        onChange={ (e) => setPrice(e.target.value)}
                     ></Form.Control>
                 </Form.Group>
-                <Form.Group className='my-2' controlId='password'> 
-                    <Form.Label>Password</Form.Label>
+                <Form.Group className='my-2' controlId='type'> 
+                    <Form.Label>Type</Form.Label>
                     <Form.Control 
-                        type='password'
-                        placeholder="Enter Password"
-                        value={password}
-                        onChange={ (e) => setPassword(e.target.value)}
-                    ></Form.Control>
-                </Form.Group>
-                <Form.Group className='my-2' controlId='confirmPassword'> 
-                    <Form.Label>Confirm Password</Form.Label>
-                    <Form.Control 
-                        type='password'
-                        placeholder="Confrim Password"
-                        value={confirmPassword}
-                        onChange={ (e) => setConfirmPassword(e.target.value)}
+                        type='text'
+                        placeholder="Enter Type"
+                        value={type}
+                        onChange={ (e) => setType(e.target.value)}
                     ></Form.Control>
                 </Form.Group>
                 {isLoading && <Loader/>}
                 <Button type='submit' variant='primary' className='mt-3'>
-                    Sign Up
+                    Create Now
                 </Button>
 
                 <Row className='py-3'>
                     <Col>
-                        Alreay have an account? <Link to='/login'>Log In Now</Link>
+                        You want to leave a review? <Link to='/login'>Log In Now</Link>
                     </Col>
                 </Row>
             </Form>
@@ -98,4 +84,4 @@ const RegisterScreen = () => {
     )
 }
 
-export default RegisterScreen
+export default ProductScreen

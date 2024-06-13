@@ -1,6 +1,6 @@
 import React from 'react'
 import { Navbar, Nav, Container, NavDropdown, Badge} from 'react-bootstrap';
-import {FaSignInAlt, FaSignOutAlt} from 'react-icons/fa';
+import {FaSignInAlt, FaSignOutAlt, FaProductHunt} from 'react-icons/fa';
 import { useSelector, useDispatch } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
 import { useLoginMutation, useLogoutMutation } from '../slices/usersApiSlice';
@@ -44,6 +44,11 @@ const header = () => {
                                             Profile
                                         </NavDropdown.Item>
                                     </LinkContainer>
+                                    <LinkContainer to='/create'>
+                                        <NavDropdown.Item>
+                                            Create Product
+                                        </NavDropdown.Item>
+                                    </LinkContainer>
                                     <NavDropdown.Item onClick={logoutHandler}>
                                         Logout
                                     </NavDropdown.Item>
@@ -52,7 +57,11 @@ const header = () => {
                             </>
                         ): (
                             <>
-                            
+                            <LinkContainer to='/create'>
+                                <Nav.Link>
+                                <FaProductHunt className='mx-1'/>Create Product
+                                </Nav.Link>
+                            </LinkContainer>
                             <LinkContainer to='/login'>
                                 <Nav.Link>
                                     <FaSignInAlt /> Sing In
