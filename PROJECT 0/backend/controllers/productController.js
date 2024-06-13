@@ -55,14 +55,28 @@ const getProduct = asyncHandler(async (req, res) => {
 // @access public
 const deleteProduct = asyncHandler(async (req, res) => {
 
-    try {
-        const deleted = await Product.deleteOne(Product._id);
+    // try {
+    //     const deleted = await Product.deleteOne(req.params._id);
         
-        res.status(200).json({message: 'Product deleted'})
+    //     res.status(200).json({message: `Product deleted ${deleted}`})
 
+    // } catch (error) {
+    //     throw new Error(error);
+    // }
+    try {
+        const product = await Product.findById(req.params.id);
+
+        if (product) {
+            await Product.deleteOne(product);
+            res.status(200).json({ message: 'Product deleted' });
+        } else {
+            res.status(404);
+            throw new Error('Product not found');
+        }
     } catch (error) {
-        throw new Error(error);
+        res.status(500).json({ message: error.message });
     }
+
 });
 
 

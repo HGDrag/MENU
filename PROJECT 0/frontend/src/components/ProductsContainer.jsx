@@ -4,8 +4,8 @@ import React from 'react'
 const ProductsContainer = ({ children }) => {
   return (
     <Container>
-      <Row className="justify-content-center mt-5 myCards">
-        <Col xs={12} className="p-5 d-flex flex-wrap">
+      <Row>
+        <Col xs={10} className="d-flex flex-wrap offset-2 my-5">
           {children}
         </Col>
       </Row>

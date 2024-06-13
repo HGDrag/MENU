@@ -17,9 +17,13 @@ const productSlice = createSlice({
                 state.productInfo = [];
               }
         },
+        removeCredentials: (state, action) => {
+            state.productInfo = null;
+            localStorage.removeItem('productInfo');
+        },
     },
 });
 
-export const { setCredentials } = productSlice.actions;
+export const { setCredentials, removeCredentials } = productSlice.actions;
 
 export default productSlice.reducer;
