@@ -51,8 +51,8 @@ const getProduct = asyncHandler(async (req, res) => {
 });
 
 // @desc DELETE PRODUCT
-// route POST /api/products/delete
-// @access protected
+// route POST /api/products/product:id/delete
+// @access public
 const deleteProduct = asyncHandler(async (req, res) => {
 
     try {
@@ -66,9 +66,36 @@ const deleteProduct = asyncHandler(async (req, res) => {
 });
 
 
+// @desc UPDATE PRODUCT INFO
+// route PUT /api/products/product:id/update
+// @access public
+const updateProductInfo = asyncHandler(async (req, res) => {
+    const product = await Product.findById(req.params.id);
+
+    if(product) {
+        product.name = req.body.name || product.name;
+        product.price = req.body.price || product.price;
+        product.type = req.body.type || product.type;
+
+        const updatedProduct = await product.save();
+        
+        res.status(200).json({
+            _id: updatedProduct._id,
+            name: updatedProduct.name,
+            price: updatedProduct.price,
+            type: updatedProduct.type,
+        });
+        
+    } else {
+        res.status(404);
+        throw new Error('Product not found');
+    }
+});
+
 export {
     createProduct,
     getAllProducts,
     getProduct,
-    deleteProduct
+    deleteProduct,
+    updateProductInfo
 }
