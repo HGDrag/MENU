@@ -9,6 +9,8 @@ import ProductCard from '../components/ProductCard';
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 import ProductsContainer from '../components/ProductsContainer'
+import Loader from '../components/Loader';
+
 const AllProductsScreen = () => {
 
     const dispatch = useDispatch();
@@ -18,7 +20,6 @@ const AllProductsScreen = () => {
     const { productInfo } = useSelector((state) => state.product);
 
     const dataHandler = async (e) => {
-        // e.preventDefault();
         try {
             const res = await allProducts().unwrap()
             dispatch(setCredentials([...res]));
@@ -29,13 +30,18 @@ const AllProductsScreen = () => {
 
     useEffect(() => {
         dataHandler()
-        console.log(productInfo)
     }, []);
     return (
             <ProductsContainer>
-            {productInfo.map((product) => (
-                <ProductCard product={product} key={product._id}/>
-                ))}
+            {
+                isLoading ? (
+                    <Loader />
+                ) : (
+                    productInfo.map((product) => (
+                        <ProductCard product={product} key={product._id} />
+                    ))
+                )
+            }
             </ProductsContainer>
     )
 }

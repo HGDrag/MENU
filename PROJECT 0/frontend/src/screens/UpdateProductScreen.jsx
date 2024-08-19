@@ -1,84 +1,100 @@
-import React from 'react'
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Form, Button, Row, Col } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import Loader from '../components/Loader';
 import FormContainer from '../components/FormContainer';
-import { useAllProductsMutation, useCreateMutation } from '../slices/productsApiSlice';
+import { useUpdateMutation } from '../slices/productsApiSlice';
 import { setCredentials } from '../slices/authSlice';
+import { React, useEffect } from 'react';
 
-const CreateProductScreen = () => {
+const UpdateProductScreen = () => {
+    const { id } = useParams();
     const [name, setName] = useState('');
     const [price, setPrice] = useState('');
     const [type, setType] = useState('');
-
+    
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    //refetch the data
-    const fetchAll = useAllProductsMutation();
     const { productInfo } = useSelector((state) => state.product);
+    const found = productInfo.find(product => product._id === id)
+    const [update, { isLoading }] = useUpdateMutation();
     
-    const [create, { isLoading }] = useCreateMutation();
-
+    useEffect(()=> {
+        if (found) {
+            setName(found.name);
+            setPrice(found.price);
+            setType(found.type);
+        }
+    }, [found.name, found.price, found.type])
+    
     const submitHandler = async (e) => {
         e.preventDefault();
-        if (name === '' && price === '' && type === '') {
+        if (name === '' || price === '' || type === '') {
             toast.error('Please fill all fields!')
-        }else{
+            console.error(err.error);
+        } else {
             try {
-                const res = await create({name, price, type}).unwrap();
-                dispatch(setCredentials([...res]));
-                fetchAll.refetch();
+                const res = await update({
+                    _id: id,
+                    name, 
+                    price, 
+                    type 
+                }).unwrap();
+                try {
+                    dispatch(setCredentials(...res));
+                } catch (dispatchError) {
+                    console.error('Dispatch error:', dispatchError);
+                }
                 navigate('/products');
+                toast.success('Product Updated');
             } catch (err) {
-                // toast.error(err.data.message || err.error);
-                console.log(err)
-                navigate('/products');
+                toast.error(err?.data?.message || err.error)
             }
         }
     }
 
     return (
         <FormContainer>
-            <h1>Create Product</h1>
+            <h1>Update Product</h1>
 
-            <Form onSubmit={ submitHandler }>
-            <Form.Group className='my-2' controlId='name'> 
+            <Form onSubmit={submitHandler}>
+                <Form.Group className='my-2' controlId='name'>
                     <Form.Label>Name</Form.Label>
-                    <Form.Control 
+                    <Form.Control
                         required
                         type='text'
                         placeholder="Enter Name"
                         value={name}
-                        onChange={ (e) => setName(e.target.value)}
+                        onChange={(e) => setName(e.target.value)
+                        }
                     ></Form.Control>
                 </Form.Group>
-                <Form.Group className='my-2' controlId='price'> 
+                <Form.Group className='my-2' controlId='price'>
                     <Form.Label>Price</Form.Label>
-                    <Form.Control 
+                    <Form.Control
                         required
                         type='number'
                         placeholder="Enter Price"
                         value={price}
-                        onChange={ (e) => setPrice(e.target.value)}
+                        onChange={(e) => setPrice(e.target.value)}
                     ></Form.Control>
                 </Form.Group>
-                <Form.Group className='my-2' controlId='type'> 
+                <Form.Group className='my-2' controlId='type'>
                     <Form.Label>Type</Form.Label>
-                    <Form.Control 
+                    <Form.Control
                         required
                         type='text'
                         placeholder="Enter Type"
                         value={type}
-                        onChange={ (e) => setType(e.target.value)}
+                        onChange={(e) => setType(e.target.value)}
                     ></Form.Control>
                 </Form.Group>
-                {isLoading && <Loader/>}
+                {isLoading && <Loader />}
                 <Button type='submit' variant='primary' className='mt-3'>
-                    Create Now
+                    Update Now
                 </Button>
 
                 <Row className='py-3'>
@@ -91,4 +107,4 @@ const CreateProductScreen = () => {
     )
 }
 
-export default CreateProductScreen
+export default UpdateProductScreen;

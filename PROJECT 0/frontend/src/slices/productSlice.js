@@ -13,9 +13,9 @@ const productSlice = createSlice({
             if (Array.isArray(action.payload)) {
                 state.productInfo = [...action.payload];
                 localStorage.setItem('productInfo', JSON.stringify(action.payload))
-              } else {
+            } else {
                 state.productInfo = [];
-              }
+            }
         },
         removeCredentials: (state, action) => {
             state.productInfo = null;
