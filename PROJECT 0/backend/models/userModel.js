@@ -15,6 +15,7 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true,
     },
+    //add role field
 }, {
     timestamps: true
 });
