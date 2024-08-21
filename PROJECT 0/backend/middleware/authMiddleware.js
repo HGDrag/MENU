@@ -25,4 +25,7 @@ const protect = asyncHandler(async (req, res, next) => {
     }
 });
 
+//check for role in a new function
+
+
 export { protect }
