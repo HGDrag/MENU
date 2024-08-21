@@ -2,6 +2,8 @@ import express from 'express';
 import { createProduct, getAllProducts, getProduct, deleteProduct, updateProductInfo } from '../controllers/productController.js';
 const router = express.Router();
 
+//protect the routes create, update, delete using authMiddleware functions
+
 router.get('/all', getAllProducts);
 router.post('/', createProduct);
 router.get('/product/:id', getProduct);
