@@ -5,7 +5,7 @@ const ProductsContainer = ({ children }) => {
   return (
     <Container>
       <Row>
-        <Col xs={10} className="d-flex flex-wrap offset-2 my-5">
+        <Col xs={12} className="d-flex flex-wrap justify-content-around my-5">
           {children}
         </Col>
       </Row>

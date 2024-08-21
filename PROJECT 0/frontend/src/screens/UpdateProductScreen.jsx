@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import Loader from '../components/Loader';
 import FormContainer from '../components/FormContainer';
 import { useUpdateMutation } from '../slices/productsApiSlice';
-import { setCredentials } from '../slices/authSlice';
+import { setCredentials } from '../slices/productSlice';
 import { React, useEffect } from 'react';
 
 const UpdateProductScreen = () => {

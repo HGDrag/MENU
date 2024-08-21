@@ -1,5 +1,6 @@
 import React from 'react'
 import Card from 'react-bootstrap/Card'
+import { Col } from "react-bootstrap";
 import { Link } from 'react-router-dom';
 import { useDeleteMutation } from '../slices/productsApiSlice';
 import { useNavigate } from 'react-router-dom';
@@ -27,7 +28,8 @@ const ProductCard = ({ product }) => {
     
 
     return (
-            <Card className='col-sm-3 mx-3 mb-4' >
+        <Col xs={12} sm={6} md={6} lg={4} xl={4} xxl={3} className='p-1'>
+            <Card >
                 <Card.Body>
                     <Card.Title>{product.name}</Card.Title>
                     <Card.Subtitle className="mb-2 text-muted">{product.type}</Card.Subtitle>
@@ -38,6 +40,7 @@ const ProductCard = ({ product }) => {
                     <Link onClick={deleteHandler} className='btn btn-danger'>Delete</Link>
                 </Card.Body>
             </Card>
+        </Col>
     )
 }
 
