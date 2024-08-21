@@ -4,6 +4,8 @@ const router = express.Router();
 
 //protect the routes create, update, delete using authMiddleware functions
 
+//refactor routes to be simillar to user routes
+
 router.get('/all', getAllProducts);
 router.post('/', createProduct);
 router.get('/product/:id', getProduct);
