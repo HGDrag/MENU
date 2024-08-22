@@ -27,7 +27,7 @@ const header = () => {
     }
     
   return (
-    <header>
+    <header className='shadow-lg'>
             <Navbar bg='dark' variant='dark' expand='lg' collapseOnSelect>
                 <Container>
                     <LinkContainer to='/'>

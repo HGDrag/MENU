@@ -10,7 +10,7 @@ import AllProductsScreen from './screens/AllProductsScreen.jsx'
 import CreateProductScreen from './screens/CreateProductScreen.jsx'
 import UpdateProductScreen from './screens/UpdateProductScreen.jsx'
 import ProfileScreen from './screens/ProfileScreen.jsx'
-import PrivateRoute from './components/PrivateRoute.jsx' // if we want something private => wrap in this component
+import { AuthRoute, RoleRoute } from './components/PrivateRoute.jsx'
 //CSS IMPORTS 
 import './index.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -26,11 +26,13 @@ const router = createBrowserRouter(
       <Route path='/login' element={<LoginScreen />} />
       <Route path='/register' element={<RegisterScreen />} />
       <Route path='/products' element={<AllProductsScreen />} />
-      <Route path='/create' element={<CreateProductScreen />} />
-      <Route path='/products/product/:id/update/' element={<UpdateProductScreen />} />
       {/* PRIVATE ROUTES */}
-      <Route path='' element={<PrivateRoute />}>
+      <Route path='' element={<AuthRoute />}>
         <Route path='/profile' element={<ProfileScreen />} />
+      </Route>
+      <Route path='' element={<RoleRoute />}>
+        <Route path='/create' element={<CreateProductScreen />} />
+        <Route path='/products/product/:id/update/' element={<UpdateProductScreen />} />
       </Route>
 
     </Route>

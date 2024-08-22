@@ -23,8 +23,6 @@ const protect = asyncHandler(async (req, res, next) => {
     }
 });
 
-//check for role in a new function
-//EXAMPLE CODE 
 const checkRole = asyncHandler(async (req, res, next) => {
     let token;
     token = req.cookies.jwt;
@@ -32,14 +30,14 @@ const checkRole = asyncHandler(async (req, res, next) => {
     try{
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         req.user = await User.findById(decoded.userId).select('-password');
-        if(req.user.role !== 'User') {
+        if(req.user.isAdmin) {
             next();
         } else {
             throw new Error();
         }
     } catch (error) {
             res.status(403);
-            throw new Error('Forbidden, No permission');
+            throw new Error('Forbidden');
         }
 });
 

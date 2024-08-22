@@ -93,10 +93,10 @@ const UpdateProductScreen = () => {
                     ></Form.Control>
                 </Form.Group>
                 {isLoading && <Loader />}
-                <Button type='submit' variant='primary' className='mt-3'>
+                <Button type='submit' variant='primary' className='mt-3 me-2'>
                     Update Now
                 </Button>
-
+                <Link to='/products' className='btn btn-danger mt-3'>Cancel</Link>
                 <Row className='py-3'>
                     <Col>
                         You want to leave a review? <Link to='/login'>Log In Now</Link>

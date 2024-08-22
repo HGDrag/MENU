@@ -15,7 +15,6 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true,
     },
-    //add role field
     role: {
         type: String,
         enum: ['User', 'Admin'],

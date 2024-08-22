@@ -86,12 +86,6 @@ const updateProductInfo = asyncHandler(async (req, res) => {
 
         const updatedProduct = await product.save();
         
-        // res.status(200).json({
-        //     _id: updatedProduct._id,
-        //     name: updatedProduct.name,
-        //     price: updatedProduct.price,
-        //     type: updatedProduct.type,
-        // });
         getAllProducts(req, res);
         
     } else {
