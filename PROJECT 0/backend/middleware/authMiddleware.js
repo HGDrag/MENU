@@ -30,7 +30,7 @@ const checkRole = asyncHandler(async (req, res, next) => {
     try{
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         req.user = await User.findById(decoded.userId).select('-password');
-        if(req.user.isAdmin) {
+        if(!req.user.role || req.user.role !== 'User' ) {
             next();
         } else {
             throw new Error();

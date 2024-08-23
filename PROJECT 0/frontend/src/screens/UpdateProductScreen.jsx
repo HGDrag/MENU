@@ -28,7 +28,7 @@ const UpdateProductScreen = () => {
             setPrice(found.price);
             setType(found.type);
         }
-    }, [found.name, found.price, found.type])
+    }, [found])
     
     const submitHandler = async (e) => {
         e.preventDefault();
