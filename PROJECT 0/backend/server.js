@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import userRoutes from './routes/userRoutes.js';
 import productRoutes from './routes/productRoutes.js'
+import reviewRoutes from './routes/reviewRoutes.js'
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 import connectDb from './config/db.js'
 import cookieParser from "cookie-parser";
@@ -21,6 +22,7 @@ app.use(cookieParser());
 
 app.use('/api/users', userRoutes);
 app.use('/api/products', productRoutes);
+app.use('/api/reviews', reviewRoutes);
 
 app.get('/', (req, res) =>  res.send('Server is ready'));
 

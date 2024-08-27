@@ -45,9 +45,9 @@ const ProductCard = ({ product }) => {
                     </Card.Text>
                     {isAdmin ? (
                         <>
-                        <Link to={`/products/product/${product._id}/update`} className='btn btn-success me-3'>Update</Link>
-                        <Link onClick={deleteHandler} className='btn btn-danger'>Delete</Link>
-                    </>
+                            <Link to={`/products/product/${product._id}/update`} className='btn btn-success me-3'>Update</Link>
+                            <Link onClick={deleteHandler} className='btn btn-danger'>Delete</Link>
+                        </>
                     ): (
                         <></>
                     )}
