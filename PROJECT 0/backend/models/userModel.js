@@ -21,8 +21,10 @@ const userSchema = mongoose.Schema({
         default: 'User'
     }
 }, {
-    timestamps: true
-});
+    timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true }
+},);
 
 userSchema.pre('save', async function (next) {
 
@@ -38,6 +40,12 @@ userSchema.pre('save', async function (next) {
 userSchema.methods.matchPassword = async function (enteredPassword) {
     return await bcrypt.compare(enteredPassword, this.password);
 }
+
+userSchema.virtual('reviews', {
+    ref: 'Review',
+    foreignField: 'user',
+    localField: '_id'
+})
 
 const User = mongoose.model('User', userSchema);
 

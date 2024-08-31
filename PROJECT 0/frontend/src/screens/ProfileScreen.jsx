@@ -8,6 +8,8 @@ import Loader from '../components/Loader';
 import FormContainer from '../components/FormContainer';
 import { useUpdateUserMutation } from '../slices/usersApiSlice';
 import { setCredentials } from '../slices/authSlice';
+import ReviewsContainer from '../components/ReviewsContainer';
+import ReviewCard from '../components/ReviewCard';
 
 const ProfileScreen = () => {
     const [name, setName] = useState('');
@@ -19,7 +21,6 @@ const ProfileScreen = () => {
     const dispatch = useDispatch();
 
     const { userInfo } = useSelector((state) => state.auth);
-
     const [updateProfile, {isLoading}] =  useUpdateUserMutation();
 
     useEffect(() => {
@@ -49,6 +50,7 @@ const ProfileScreen = () => {
     }
 
     return (
+        <>
         <FormContainer>
             <h1>Update Profile</h1>
 
@@ -95,6 +97,24 @@ const ProfileScreen = () => {
                 </Button>
             </Form>
         </FormContainer>
+
+        <hr className='w-75 m-auto my-5'/>
+        {userInfo.reviews.map(review => {
+            console.log(review)
+        })}
+        <h2 className='my-3'>Your Reviews</h2>
+        <ReviewsContainer >
+            {
+                isLoading? (
+                    <Loader/>
+                ) : (
+                    userInfo.reviews.map((review) => (
+                        <ReviewCard review={review} key={review._id}/>
+                    ))
+                )
+            }
+        </ReviewsContainer>
+        </>
     )
 }
 

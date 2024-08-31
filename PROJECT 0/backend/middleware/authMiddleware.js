@@ -42,4 +42,41 @@ const checkRole = asyncHandler(async (req, res, next) => {
 });
 
 
-export { protect, checkRole }
+const checkOwner = asyncHandler( async (req, res, next) => {
+    let token;
+    token = req.cookies.jwt;
+
+    if (!token) {
+        return res.status(401).json({ message: 'Access Denied: No Token Provided' });
+    }
+
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        req.user = await User.findById(decoded.userId).populate('reviews').select('-password');
+
+        if (!req.user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        const { id } = req.params;
+        
+        // Check if the user is an admin
+        if (req.user.role === 'Admin') {
+            return next();
+        }
+
+        // Check if the user has created the review
+        const userReview = req.user.reviews.find(review => review._id.toString() === id);
+        if (userReview) {
+            return next();
+        }
+
+        // If neither condition is met, deny access
+        return res.status(403).json({ message: 'Access Denied' });
+    } catch (error) {
+            res.status(400);
+            throw new Error('Invalid Token');
+    }
+})
+
+
+export { protect, checkRole, checkOwner }

@@ -27,13 +27,13 @@ const reviewSchema = new mongoose.Schema({
     toObject: { virtuals: true }
 });
 
-reviewSchema.pre(/^find/, function (next) {
-    this.populate({
-        path: 'user',
-        select: 'name'
-    });
-    next();
-});
+// reviewSchema.pre(/^find/, function (next) {
+//     this.populate({
+//         path: 'user',
+//         select: 'name'
+//     });
+//     next();
+// });
 
 reviewSchema.statics.calcAverageRatings = async function (productId) {
     const stats = await this.aggregate([
@@ -48,7 +48,6 @@ reviewSchema.statics.calcAverageRatings = async function (productId) {
             }
         }
     ]);
-    console.log(stats);
 
     await Product.findByIdAndUpdate(productId, {
         reviewCount: stats[0].nReviews,
@@ -59,6 +58,17 @@ reviewSchema.statics.calcAverageRatings = async function (productId) {
 reviewSchema.post('save', function () {
     this.constructor.calcAverageRatings(this.product);
 });
+
+// reviewSchema.pre(/^findOneAnd/, async function (next) {
+//     this.r = await this.findOne()
+//     console.log(r)
+//     next();
+// });
+
+// reviewSchema.post(/^findOneAnd/, async function () {
+//     await this.r.constructor.calcAverageRatings(this.r.product)
+// });
+
 
 const Review = mongoose.model('Review', reviewSchema);
 

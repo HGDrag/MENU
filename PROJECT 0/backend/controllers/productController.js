@@ -41,8 +41,11 @@ const createProduct = asyncHandler(async (req, res) => {
 const getProduct = asyncHandler(async (req, res) => {
     try{
         const product = await Product.findById( req.params.id ).populate('reviews');
-        res.status(200).json(product);
-
+        if(product){
+            res.status(200).json(product);
+        } else{
+            res.status(404).json({message: 'Product Not Found'})
+        }
     } catch(error) {
         res.status(500)
         throw new Error('Something went wrong!');
@@ -56,10 +59,11 @@ const getProduct = asyncHandler(async (req, res) => {
 const deleteProduct = asyncHandler(async (req, res) => {
 
     try {
-        const product = await Product.findById(req.params.id);
-
+        const product = await Product.findById(req.params.id).populate('reviews');
+        console.log(product)
         if (product) {
-            await Product.deleteOne(product);
+            // await Product.deleteOne(product);
+            await Product.deleteOne({ _id: product._id });
             getAllProducts(req, res);
             
         } else {

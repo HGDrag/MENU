@@ -5,9 +5,11 @@ import Review from '../models/reviewModel.js';
 // @access public
 const getAllReviews = asyncHandler(async (req, res) => {
     let filter = {};
-
+    
     if (req.params.productId) filter = { product: req.params.productId}
     
+    if (req.user) filter = { user: req.user.id }
+
     const review = await Review.find(filter);
 
     res.status(200).json(review);
@@ -54,8 +56,8 @@ const getReview = asyncHandler(async (req, res) => {
 });
 
 // @desc DELETE REVIEW
-// route POST /api/reviews/review:id/delete
-// @access public
+// route POST /api/reviews/review:id
+// @access private
 const deleteReview = asyncHandler(async (req, res) => {
 
     try {
@@ -64,10 +66,9 @@ const deleteReview = asyncHandler(async (req, res) => {
         if (review) {
             await Review.deleteOne(review);
             getAllReviews(req, res);
-            
         } else {
             res.status(404);
-            throw new Error('Product not found');
+            throw new Error('Review not found');
         }
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -75,18 +76,15 @@ const deleteReview = asyncHandler(async (req, res) => {
 
 });
 
-
 // @desc UPDATE REVIEW 
-// route PUT /api/reviews/review:id/update
-// @access public
+// route PUT /api/reviews/review:id
+// @access private
 const updateReview = asyncHandler(async (req, res) => {
     const review = await Review.findById(req.params.id);
-    // const { review, rating, product, user } = req.body;
 
     if(review) {
         review.review = req.body.review || product.review;
         review.rating = req.body.rating || product.rating;
-        // product.type = req.body.type || product.type;
 
         const updatedReview = await review.save();
         

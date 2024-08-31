@@ -7,7 +7,7 @@ import User from '../models/userModel.js';
 // @access public
 const authUser = asyncHandler(async (req, res) => {
     const { email, password } = req.body;
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }).populate('reviews');
 
     if(user && (await user.matchPassword(password))) {
         generateToken(res, user._id);
@@ -15,7 +15,8 @@ const authUser = asyncHandler(async (req, res) => {
             _id: user._id,
             name: user.name,
             email: user.email,
-            role: user.role
+            role: user.role,
+            reviews: user.reviews
         });
     } else {
         res.status(401);
@@ -76,21 +77,28 @@ const logoutUser = asyncHandler(async (req, res) => {
 // route GET /api/users/profile
 // @access private
 const getUserProfile = asyncHandler(async (req, res) => {
-    const user = {
-        _id: req.user._id,
-        name: req.user.name,
-        email: req.user.email
+    try {
+        const user = await User.findById(req.user._id).populate('reviews');
+        if (!user) {
+            res.status(404);
+            throw new Error('User not found');
+        }
+        res.status(200).json({
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            reviews: user.reviews
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
-
-    res.status(200).json(user);
 });
-
 
 // @desc UPDATE USER PROFILE
 // route PUT /api/users/profile
 // @access private
 const updateUserProfile = asyncHandler(async (req, res) => {
-    const user = await User.findById(req.user._id);
+    const user = await User.findById(req.user._id).populate('reviews');
 
     if(user) {
         user.name = req.body.name || user.name;
@@ -105,6 +113,8 @@ const updateUserProfile = asyncHandler(async (req, res) => {
             _id: updatedUser._id,
             name: updatedUser.name,
             email: updatedUser.email,
+            role: user.role,
+            reviews: user.reviews
         });
         
     } else {

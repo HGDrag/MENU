@@ -1,6 +1,5 @@
 import express from 'express';
 import { createProduct, getAllProducts, getProduct, deleteProduct, updateProductInfo } from '../controllers/productController.js';
-import { createReview, getAllReviews, deleteReview, updateReview, getReview }from '../controllers/reviewController.js'
 import { protect, checkRole } from '../middleware/authMiddleware.js';
 import reviewRouter from './reviewRoutes.js'
 const router = express.Router();
@@ -11,11 +10,7 @@ const router = express.Router();
 
 // router.route('/:productId/reviews') .post(protect, createReview);
 
-router.use('/:productId/reviews', reviewRouter)
-
-
-
-
+router.use('/product/:productId/reviews', reviewRouter)
 
 router.get('/all', getAllProducts);
 router.get('/product/:id', getProduct);
