@@ -68,8 +68,7 @@ const UpdateProductScreen = () => {
                         type='text'
                         placeholder="Enter Name"
                         value={name}
-                        onChange={(e) => setName(e.target.value)
-                        }
+                        onChange={(e) => setName(e.target.value)}
                     ></Form.Control>
                 </Form.Group>
                 <Form.Group className='my-2' controlId='price'>

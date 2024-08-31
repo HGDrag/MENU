@@ -37,8 +37,8 @@ export const usersApiSlice = apiSlice.injectEndpoints({
                 url: `${USERS_URL}/profile/reviews/review/${id}`,
                 method: 'DELETE'
             })
-        })
+        }),
     })
 })
 //convention for mutations
-export const { useLoginMutation, useLogoutMutation, useRegisterMutation, useUpdateUserMutation, useDeleteUserReviewMutation } = usersApiSlice;
+export const { useLoginMutation, useLogoutMutation, useRegisterMutation, useUpdateUserMutation, useDeleteUserReviewMutation, useUpdateUserReviewMutation } = usersApiSlice;

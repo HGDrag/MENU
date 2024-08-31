@@ -10,6 +10,7 @@ import AllProductsScreen from './screens/AllProductsScreen.jsx'
 import CreateProductScreen from './screens/CreateProductScreen.jsx'
 import UpdateProductScreen from './screens/UpdateProductScreen.jsx'
 import ProfileScreen from './screens/ProfileScreen.jsx'
+import UpdateReviewScreen from './screens/UpdateReviewScreen.jsx'
 import { AuthRoute, RoleRoute } from './components/PrivateRoute.jsx'
 //CSS IMPORTS 
 import './index.css'
@@ -29,6 +30,7 @@ const router = createBrowserRouter(
       {/* PRIVATE ROUTES */}
       <Route path='' element={<AuthRoute />}>
         <Route path='/profile' element={<ProfileScreen />} />
+        <Route path='/profile/reviews/review/:id' element={<UpdateReviewScreen />} />
       </Route>
       <Route path='' element={<RoleRoute />}>
         <Route path='/create' element={<CreateProductScreen />} />
