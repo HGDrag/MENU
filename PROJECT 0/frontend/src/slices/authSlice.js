@@ -20,14 +20,7 @@ const authSlice = createSlice({
         setReviews: (state, action) => {
             state.userInfo.reviews =  action.payload
         } ,
-        updateReviews: (state, action) => {
-            const { reviewId, newReview } = action.payload;
-            console.log('Updating review with ID:', reviewId, 'New review:', newReview);
-            state.userInfo.reviews = state.userInfo.reviews.map(review => 
-                review._id === reviewId ? { ...review, ...newReview } : review
-            );
-            console.log('Updated reviews:', state.userInfo.reviews);
-        }
+        
     },
 });
 

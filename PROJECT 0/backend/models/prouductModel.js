@@ -13,12 +13,6 @@ const productSchema = mongoose.Schema({
         type: String,
         required: true,
     },
-    // reviews: [
-    //     {
-    //         type: Mongoose.Schema.Type.ObjectId,
-    //         ref: 'Review'
-    //     }
-    // ],
     reviewCount: {
         type: Number,
         // required: true,

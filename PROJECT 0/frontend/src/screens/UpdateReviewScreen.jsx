@@ -62,6 +62,7 @@ const UpdateReviewScreen = () => {
         <Form.Group className='my-2' controlId='review'>
             <Form.Label className='my-2'>Review:</Form.Label>
             <Form.Control
+                rows={4}
                 as="textarea"
                 type="text"
                 placeholder="Enter Your Review"
@@ -101,7 +102,7 @@ const UpdateReviewScreen = () => {
         </>
         </Form>
     </FormContainer>
-    
+
   )
 }
 

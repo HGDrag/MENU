@@ -1,3 +1,4 @@
+import { deleteReview } from '../../../backend/controllers/reviewController';
 import { apiSlice } from './apiSlice';
 const PRODUCTS_URL = '/api/products';
 
@@ -33,8 +34,14 @@ export const productsApiSlice = apiSlice.injectEndpoints({
                 body: data
             }),
             invalidatesTags: ['Product']
+        }),
+        deleteProductReview: builder.mutation({
+            query: ({productId, reviewId}) => ({
+                url: `${PRODUCTS_URL}/product/${productId}/reviews/review/${reviewId}`,
+                method: 'DELETE'
+            }),
         })
     })
 })
 
-export const {useAllProductsMutation, useCreateMutation, useDeleteMutation, useUpdateMutation} = productsApiSlice;
+export const {useAllProductsMutation, useCreateMutation, useDeleteMutation, useUpdateMutation, useDeleteProductReviewMutation} = productsApiSlice;

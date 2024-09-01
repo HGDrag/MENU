@@ -21,9 +21,12 @@ const productSlice = createSlice({
             state.productInfo = null;
             localStorage.removeItem('productInfo');
         },
+        setProductReviews: (state, action) => {
+            state.productInfo.reviews = action.payload
+        }
     },
 });
 
-export const { setCredentials, removeCredentials } = productSlice.actions;
+export const { setCredentials, removeCredentials, setProductReviews } = productSlice.actions;
 
 export default productSlice.reducer;

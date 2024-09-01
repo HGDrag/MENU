@@ -38,6 +38,13 @@ export const usersApiSlice = apiSlice.injectEndpoints({
                 method: 'DELETE'
             })
         }),
+        updateUserReview: builder.mutation({
+            query: ({ _id, review, rating }) => ({
+                url: `${USERS_URL}/profile/reviews/review/${_id}`,
+                method: 'PUT',
+                body: { review, rating }
+            })
+        }),
     })
 })
 //convention for mutations

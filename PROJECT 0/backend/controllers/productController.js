@@ -62,7 +62,6 @@ const deleteProduct = asyncHandler(async (req, res) => {
         const product = await Product.findById(req.params.id).populate('reviews');
         console.log(product)
         if (product) {
-            // await Product.deleteOne(product);
             await Product.deleteOne({ _id: product._id });
             getAllProducts(req, res);
             

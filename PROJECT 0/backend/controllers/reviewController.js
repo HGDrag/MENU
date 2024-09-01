@@ -7,7 +7,7 @@ const getAllReviews = asyncHandler(async (req, res) => {
     let filter = {};
     
     if (req.params.productId) filter = { product: req.params.productId}
-    
+
     if (req.user) filter = { user: req.user.id }
 
     const review = await Review.find(filter);
@@ -20,6 +20,7 @@ const getAllReviews = asyncHandler(async (req, res) => {
 // @access private
 const createReview = asyncHandler(async (req, res) => {
 
+    console.log(req.body.product)
     if(!req.body.product) req.body.product = req.params.productId; 
     if(!req.body.user) req.body.user = req.user.id; 
 

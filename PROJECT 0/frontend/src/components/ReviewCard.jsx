@@ -2,7 +2,7 @@ import React from 'react'
 import Card from 'react-bootstrap/Card'
 import { Col } from "react-bootstrap";
 import { Link } from 'react-router-dom';
-import { useDispatch,  } from 'react-redux';
+import { useDispatch, } from 'react-redux';
 import { setReviews } from '../slices/authSlice';
 import { useDeleteUserReviewMutation } from '../slices/usersApiSlice';
 const ReviewCard = ({ review }) => {
@@ -19,7 +19,7 @@ const ReviewCard = ({ review }) => {
             } catch (error) {
                 console.log(error)
             }
-    } 
+    }
 
 
     return (

@@ -10,7 +10,7 @@ const router = express.Router();
 
 // router.route('/:productId/reviews') .post(protect, createReview);
 
-router.use('/product/:productId/reviews', reviewRouter)
+router.use('/product/:productId/reviews',protect, reviewRouter)
 
 router.get('/all', getAllProducts);
 router.get('/product/:id', getProduct);

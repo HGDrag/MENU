@@ -99,9 +99,7 @@ const ProfileScreen = () => {
         </FormContainer>
 
         <hr className='w-75 m-auto my-5'/>
-        {userInfo.reviews.map(review => {
-            console.log(review)
-        })}
+        
         <h2 className='my-3'>Your Reviews</h2>
         <ReviewsContainer >
             {
