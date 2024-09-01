@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import Loader from '../components/Loader';
 import FormContainer from '../components/FormContainer';
-import { useUpdateUserMutation } from '../slices/usersApiSlice';
+import { useGetUserReviewsMutation, useUpdateUserMutation } from '../slices/usersApiSlice';
 import { setCredentials } from '../slices/authSlice';
 import ReviewsContainer from '../components/ReviewsContainer';
 import ReviewCard from '../components/ReviewCard';
@@ -22,11 +22,14 @@ const ProfileScreen = () => {
 
     const { userInfo } = useSelector((state) => state.auth);
     const [updateProfile, {isLoading}] =  useUpdateUserMutation();
+    const [getUserReviews, { data: reviews, refetch }] = useGetUserReviewsMutation();
+    
 
     useEffect(() => {
         setName(userInfo.name);
         setEmail(userInfo.email);
-    },[userInfo.setName, userInfo.setEmail]);
+        getUserReviews();
+    },[userInfo.setName, userInfo.setEmail, getUserReviews]);
 
     const submitHandler = async (e) => {
         e.preventDefault();
@@ -99,19 +102,13 @@ const ProfileScreen = () => {
         </FormContainer>
 
         <hr className='w-75 m-auto my-5'/>
-        
+
         <h2 className='my-3'>Your Reviews</h2>
-        <ReviewsContainer >
-            {
-                isLoading? (
-                    <Loader/>
-                ) : (
-                    userInfo.reviews.map((review) => (
-                        <ReviewCard review={review} key={review._id}/>
-                    ))
-                )
-            }
-        </ReviewsContainer>
+        <ReviewsContainer>
+                {reviews?.map((review) => (
+                    <ReviewCard key={review.id} review={review} />
+                ))}
+            </ReviewsContainer>
         </>
     )
 }

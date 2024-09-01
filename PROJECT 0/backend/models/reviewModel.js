@@ -50,8 +50,8 @@ reviewSchema.statics.calcAverageRatings = async function (productId) {
     ]);
 
     await Product.findByIdAndUpdate(productId, {
-        reviewCount: stats[0].nReviews,
-        avarageRating: stats[0].avgRating,
+        reviewCount: stats[0] ? stats[0].nReviews : 0,
+        avarageRating: stats[0] ? stats[0].avgRating : 0
     })
 }
 

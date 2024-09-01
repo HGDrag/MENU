@@ -45,7 +45,13 @@ export const usersApiSlice = apiSlice.injectEndpoints({
                 body: { review, rating }
             })
         }),
+        getUserReviews: builder.mutation({
+                query: () => ({
+                    url: `${USERS_URL}/profile/reviews/all`,
+                    method: 'GET',
+                })
+        })
     })
 })
 //convention for mutations
-export const { useLoginMutation, useLogoutMutation, useRegisterMutation, useUpdateUserMutation, useDeleteUserReviewMutation, useUpdateUserReviewMutation } = usersApiSlice;
+export const { useLoginMutation, useLogoutMutation, useRegisterMutation, useUpdateUserMutation, useDeleteUserReviewMutation, useUpdateUserReviewMutation, useGetUserReviewsMutation } = usersApiSlice;

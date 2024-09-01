@@ -1,10 +1,12 @@
 import asyncHandler from 'express-async-handler';
 import Product from '../models/prouductModel.js';
+
 // @desc GET ALL PRODUCTS
 // route GET /api/products/all
 // @access public
 const getAllProducts = asyncHandler(async (req, res) => {
     const product = await Product.find().populate('reviews');
+
     res.status(200).json(product);
 });
 

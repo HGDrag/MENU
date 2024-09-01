@@ -1,8 +1,8 @@
 import Card from 'react-bootstrap/Card'
-import { useState, React } from 'react';
+import { useState, React, useEffect } from 'react';
 import { Col } from "react-bootstrap";
 import { Link } from 'react-router-dom';
-import { useDeleteMutation, useDeleteProductReviewMutation } from '../slices/productsApiSlice';
+import { useDeleteMutation, useDeleteProductReviewMutation, useAllProductsMutation } from '../slices/productsApiSlice';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCredentials, setProductReviews } from '../slices/productSlice';
@@ -28,6 +28,9 @@ const ProductCard = ({ product }) => {
         isAdmin = false;
     }
 
+  
+
+
     const [deleteProduct] = useDeleteMutation();
 
     const deleteHandler = async (e) => {
@@ -47,21 +50,24 @@ const ProductCard = ({ product }) => {
     const deleteReviewHandler = async (e) => {
         e.preventDefault();
     
-        // Access the reviewId from the data attribute
-        const reviewId = e.target.getAttribute('data-review-id');
-        const productId = product.id; // Assuming you have access to the product ID
+        if (!product) {
+            console.error('Product object is missing');
+            return;
+        }
     
-        // Log the reviewId to confirm it's being accessed
-        console.log('Review ID:', reviewId);
+        const productId = product._id;
+        const id = e.target.getAttribute('data-review-id');
     
-        // Call the mutation to delete the review
+        if (!productId || !id) {
+            console.error('Product ID or Review ID is missing');
+            return;
+        }
+    
         try {
-           const res = await deleteProductReview({ productId, reviewId });
-            console.log('Review deleted:', reviewId);
+            const res = await deleteProductReview({ productId, id }).unwrap();
     
-            dispatch(setProductReviews([...res]));
-     
-            // Update the state with the remaining reviews
+            dispatch(setProductReviews({res, productId}));
+
         } catch (error) {
             console.error('Error deleting review:', error);
         }
@@ -70,14 +76,14 @@ const ProductCard = ({ product }) => {
     return (
         <>
             <Col xs={12} sm={6} md={6} lg={4} xl={4} xxl={3} className='p-1 '>
-                <Card className='shadow border-0'>
+                <Card className='shadow border-5' border='dark'>
                     <Card.Body>
                         <Card.Title>{product.name}</Card.Title>
                         <Card.Subtitle className="mb-3 text-muted">{product.type}</Card.Subtitle>
                         <Card.Text className='my-2'>
                             Price: ${product.price}
                         </Card.Text>
-                        <Card.Text >
+                        
                             <div className='d-flex align-items-center flex-wrap'>
                                 <div className='stars me-3'>
                                     {[...Array(5)].map((star, i) => {
@@ -92,12 +98,12 @@ const ProductCard = ({ product }) => {
                                 </div>
                                 Avg: {product.avarageRating} <Link className='mx-2' onClick={handleOpen}> {product.reviewCount} Reviews</Link>
                             </div>
-                        </Card.Text>
+                        
                         {isAdmin ? (
-                            <>
+                            <div className='my-3'>
                                 <Link to={`/products/product/${product._id}/update`} className='btn btn-success me-3'>Update</Link>
                                 <Link onClick={deleteHandler} className='btn btn-danger'>Delete</Link>
-                            </>
+                            </div>
                         ) : (
                             <>
 

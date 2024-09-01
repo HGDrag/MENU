@@ -6,9 +6,15 @@ import Review from '../models/reviewModel.js';
 const getAllReviews = asyncHandler(async (req, res) => {
     let filter = {};
     
-    if (req.params.productId) filter = { product: req.params.productId}
+    // if (req.params.productId) filter = { product: req.params.productId}
 
-    if (req.user) filter = { user: req.user.id }
+    // if (req.user) filter = { user: req.user.id }
+
+    if (req.params.productId) {
+        filter = {product: req.params.productId};
+    } else if (req.user) {
+        filter = {user:  req.user.id};
+    }
 
     const review = await Review.find(filter);
 
@@ -20,20 +26,18 @@ const getAllReviews = asyncHandler(async (req, res) => {
 // @access private
 const createReview = asyncHandler(async (req, res) => {
 
-    console.log(req.body.product)
     if(!req.body.product) req.body.product = req.params.productId; 
     if(!req.body.user) req.body.user = req.user.id; 
 
     const { review, rating, product, user } = req.body;
 
     const newReview = await Review.create({ review, rating, product, user });
-    
     if(newReview) {
         res.status(201).json({
-            _id: review._id,
-            rating: rating.rating,
-            product: review.product,
-            user: review.user
+            _id: newReview._id,
+            rating: newReview.rating,
+            product: newReview.product,
+            user: newReview.user
         });
     } else {
         res.status(400);
@@ -66,6 +70,7 @@ const deleteReview = asyncHandler(async (req, res) => {
 
         if (review) {
             await Review.deleteOne(review);
+            await Review.calcAverageRatings(review.product) 
             getAllReviews(req, res);
         } else {
             res.status(404);
@@ -88,7 +93,8 @@ const updateReview = asyncHandler(async (req, res) => {
         review.rating = req.body.rating || product.rating;
 
         const updatedReview = await review.save();
-        
+        await Review.calcAverageRatings(review.product) 
+
         getAllReviews(req, res);
         
     } else {

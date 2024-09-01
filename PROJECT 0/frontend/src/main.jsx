@@ -18,6 +18,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 //REDUX IMPORTS 
 import store from './store.js'
 import { Provider } from 'react-redux'
+import CreateReviewScreen from './screens/CreateReviewScreen.jsx'
 
 
 const router = createBrowserRouter(
@@ -30,6 +31,7 @@ const router = createBrowserRouter(
       {/* PRIVATE ROUTES */}
       <Route path='' element={<AuthRoute />}>
         <Route path='/profile' element={<ProfileScreen />} />
+        <Route path='/products/product/:productId/leave-a-review' element={<CreateReviewScreen />} />
         <Route path='/profile/reviews/review/:id' element={<UpdateReviewScreen />} />
       </Route>
       <Route path='' element={<RoleRoute />}>

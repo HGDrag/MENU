@@ -22,7 +22,34 @@ const productSlice = createSlice({
             localStorage.removeItem('productInfo');
         },
         setProductReviews: (state, action) => {
-            state.productInfo.reviews = action.payload
+            const storage = localStorage.getItem('productInfo');
+            const products = JSON.parse(storage);
+
+            if (!action.payload.productId) {
+                console.error('ID is undefined');
+                return;
+            }
+            
+            let product = products.find(product => product._id === action.payload.productId);
+        
+            if (product) {
+                product.reviews = action.payload.res;
+
+                // Calculate the new average rating
+                const totalRating = product.reviews.reduce((acc, review) => acc + review.rating, 0);
+                const newAverageRating = totalRating / product.reviews.length;
+
+                // Update the product object
+                product.averageRating = newAverageRating;
+                product.reviewCount = product.reviews.length;
+
+                state.productInfo = products
+            } else {
+                console.error('Product not found');
+            }
+        },
+        addProductReviews: (state, action) => {
+            
         }
     },
 });
