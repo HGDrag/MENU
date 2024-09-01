@@ -11,11 +11,16 @@ const ReviewCard = ({ review }) => {
     const [deleteReview] = useDeleteUserReviewMutation()
 
     const deleteHandler = async (e) => {
+        e.preventDefault();
         console.log("Deleting review with ID:", review._id);
         if (review)
             try {
                 const res = await deleteReview(review._id).unwrap();
-                dispatch(setReviews(res))
+                try{
+                    dispatch(setReviews(res))
+                }   catch ( error) {
+                    console.log(error)
+                }
             } catch (error) {
                 console.log(error)
             }

@@ -33,12 +33,8 @@ const createReview = asyncHandler(async (req, res) => {
 
     const newReview = await Review.create({ review, rating, product, user });
     if(newReview) {
-        res.status(201).json({
-            _id: newReview._id,
-            rating: newReview.rating,
-            product: newReview.product,
-            user: newReview.user
-        });
+        console.log(newReview)
+        getAllReviews(req, res);
     } else {
         res.status(400);
         throw new Error('Invalid review data');

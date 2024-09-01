@@ -3,11 +3,11 @@ import { Container, Row, Col } from "react-bootstrap";
 
 const ReviewsContainer = ({children}) => {
     return (
-        <Container data-bs-theme='blue'>
+        <Container  >
             <Row>
-            <Col xs={12} className="d-flex flex-wrap justify-content-around">
-                {children}
-            </Col>
+                <Col xs={12} className="d-flex flex-wrap justify-content-around">
+                    {children}
+                </Col>
             </Row>
         </Container>
     )

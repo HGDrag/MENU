@@ -3,7 +3,7 @@ import { Navbar, Nav, Container, NavDropdown, Badge } from 'react-bootstrap';
 import { FaSignInAlt, FaSignOutAlt, FaList, FaUser, FaPlus } from 'react-icons/fa';
 import { useSelector, useDispatch } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
-import { useLoginMutation, useLogoutMutation } from '../slices/usersApiSlice';
+import { useLogoutMutation } from '../slices/usersApiSlice';
 import { logout } from '../slices/authSlice';
 import { useNavigate } from 'react-router-dom';
 
@@ -30,13 +30,13 @@ const Header = () => {
 
     return (
         <header className='shadow-lg'>
-            <Navbar bg="dark" data-bs-theme='dark'>
+            <Navbar bg="dark" data-bs-theme='dark' expand='md'>
                 <Container>
                     <LinkContainer to='/'>
                         <Navbar.Brand className='fs-2 text-info'>BEFED</Navbar.Brand>
                     </LinkContainer>
                     <Navbar.Toggle aria-controls='basic-navbar-nav' />
-                    <Navbar.Collapse id='basic-navbar-nav' />
+                    <Navbar.Collapse id='basic-navbar-nav'>
                     <Nav className='ms-auto'>
                         {userInfo ? (
                             <>
@@ -87,6 +87,7 @@ const Header = () => {
                             </>
                         )}
                     </Nav>
+                    </Navbar.Collapse>
                 </Container>
             </Navbar>
         </header>

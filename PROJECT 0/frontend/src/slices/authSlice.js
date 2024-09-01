@@ -18,8 +18,8 @@ const authSlice = createSlice({
             localStorage.removeItem('userInfo');
         },
         setReviews: (state, action) => {
-            state.userInfo.reviews =  action.payload
-        } ,
+            state.userInfo.reviews = action.payload
+        }
         
     },
 });

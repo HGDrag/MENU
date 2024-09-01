@@ -61,6 +61,8 @@ const AllProductsScreen = () => {
 
     return (
         <>
+            <h1 className='text-center mt-5 mb-3'>Our Products</h1>
+            <hr className='w-25 m-auto text-info'/>
             <div className='mt-5 d-flex flex-wrap justify-content-center gap-2 align-items-center'>
                 <p className='p-0 my-0 me-3 text-info fs-5'>Filters:</p>
                 {filters[0].map((type, idx) => (

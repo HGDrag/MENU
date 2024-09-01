@@ -90,7 +90,7 @@ const ProductCard = ({ product }) => {
                                         const starRating = i + 1
                                         return <FaStar
                                             key={i}
-                                            size={25}
+                                            size={20}
                                             color={starRating <= (product.avarageRating) ? 'gold' : 'grey'}
                                         />
 

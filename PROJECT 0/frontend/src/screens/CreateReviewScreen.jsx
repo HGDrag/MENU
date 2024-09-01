@@ -4,13 +4,13 @@ import { Form, Button, Row, Col } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import FormContainer from '../components/FormContainer';
+import { setReviews } from '../slices/authSlice';
 import { FaStar } from 'react-icons/fa'
 import { useCreateProductReviewMutation } from '../slices/productsApiSlice';
 
 
 const CreateReviewScreen = () => {
     const { productId } = useParams();
-    console.log(productId)
     const [review, setReview] = useState('');
     const [rating, setRating] = useState(null);
     const [hover, setHover] = useState(null);
@@ -20,9 +20,7 @@ const CreateReviewScreen = () => {
 
     const { productInfo } = useSelector((state) => state.product)
     const product = productInfo.find(product => product._id === productId)
-    console.log(product)
     const reviews = product.reviews
-    console.log(reviews)
 
     const [addReview] = useCreateProductReviewMutation();
 
@@ -35,8 +33,9 @@ const CreateReviewScreen = () => {
         }
         try {
             const res = await addReview({ review, rating, productId }).unwrap();
-            console.log('Response:', res);
-            navigate('/products')
+            dispatch(setReviews(res))
+            navigate('/products');
+
         } catch (error) {
             console.error('Error:', error); // Add error logging
         }
