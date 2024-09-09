@@ -57,7 +57,7 @@ const getProduct = asyncHandler(async (req, res) => {
 
 // @desc DELETE PRODUCT
 // route POST /api/products/product:id/delete
-// @access public
+// @access private
 const deleteProduct = asyncHandler(async (req, res) => {
 
     try {
@@ -77,10 +77,9 @@ const deleteProduct = asyncHandler(async (req, res) => {
 
 });
 
-
 // @desc UPDATE PRODUCT INFO
 // route PUT /api/products/product:id/update
-// @access public
+// @access private
 const updateProductInfo = asyncHandler(async (req, res) => {
     const product = await Product.findById(req.params.id);
 

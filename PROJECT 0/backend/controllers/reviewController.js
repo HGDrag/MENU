@@ -5,10 +5,6 @@ import Review from '../models/reviewModel.js';
 // @access public
 const getAllReviews = asyncHandler(async (req, res) => {
     let filter = {};
-    
-    // if (req.params.productId) filter = { product: req.params.productId}
-
-    // if (req.user) filter = { user: req.user.id }
 
     if (req.params.productId) {
         filter = {product: req.params.productId};

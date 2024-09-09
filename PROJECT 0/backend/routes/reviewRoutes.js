@@ -1,6 +1,8 @@
 import express from 'express';
-import { protect, checkRole, checkOwner} from '../middleware/authMiddleware.js';
-import { createReview, deleteReview, getAllReviews, getReview, updateReview } from '../controllers/reviewController.js';
+import { protect, checkOwner} from '../middleware/authMiddleware.js';
+import { createReview, deleteReview,
+     getAllReviews, getReview, updateReview } from '../controllers/reviewController.js';
+     
 const router = express.Router({ mergeParams: true });
 
 router.get('/all', getAllReviews);

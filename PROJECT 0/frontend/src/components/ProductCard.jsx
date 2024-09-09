@@ -8,6 +8,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setCredentials, setProductReviews } from '../slices/productSlice';
 import { FaStar } from 'react-icons/fa'
 import Modal from 'react-bootstrap/Modal';
+import { setReviews } from '../slices/authSlice';
+
 import Button from 'react-bootstrap/Button';
 
 
@@ -65,9 +67,9 @@ const ProductCard = ({ product }) => {
     
         try {
             const res = await deleteProductReview({ productId, id }).unwrap();
-    
+            console.log(res)
             dispatch(setProductReviews({res, productId}));
-
+            dispatch(setReviews(res))
         } catch (error) {
             console.error('Error deleting review:', error);
         }

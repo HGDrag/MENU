@@ -109,9 +109,9 @@ const ProfileScreen = () => {
                         {/* {reviews?.map((review) => (
                             <ReviewCard key={review.id} review={review} refetchReviews={refetch} />
                         ))} */}
-                        {userInfo.reviews.map(review => {
+                        {/* {userInfo.reviews.map(review => {
                             console.log(review)
-                        })}
+                        })} */}
                             {
                                 isLoading ? (
                                     <Loader />

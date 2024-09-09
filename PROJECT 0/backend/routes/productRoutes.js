@@ -1,16 +1,11 @@
 import express from 'express';
-import { createProduct, getAllProducts, getProduct, deleteProduct, updateProductInfo } from '../controllers/productController.js';
+import { createProduct, getAllProducts, 
+    getProduct, deleteProduct, updateProductInfo } from '../controllers/productController.js';
 import { protect, checkRole } from '../middleware/authMiddleware.js';
-import reviewRouter from './reviewRoutes.js'
+import reviewRouter from './reviewRoutes.js';
 const router = express.Router();
 
-// GET /product/:id/reviews
-// GET /product/:id/reviews/:id
-// POST /product/:id/reviews 
-
-// router.route('/:productId/reviews') .post(protect, createReview);
-
-router.use('/product/:productId/reviews',protect, reviewRouter)
+router.use('/product/:productId/reviews',protect, reviewRouter);
 
 router.get('/all', getAllProducts);
 router.get('/product/:id', getProduct);

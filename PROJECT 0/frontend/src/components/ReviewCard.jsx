@@ -4,7 +4,7 @@ import { Col } from "react-bootstrap";
 import { Link } from 'react-router-dom';
 import { useDispatch, } from 'react-redux';
 import { setReviews } from '../slices/authSlice';
-import { useDeleteUserReviewMutation } from '../slices/usersApiSlice';
+import { useDeleteUserReviewMutation, useGetUserReviewsMutation } from '../slices/usersApiSlice';
 const ReviewCard = ({ review }) => {
     const dispatch = useDispatch();
 
@@ -16,6 +16,7 @@ const ReviewCard = ({ review }) => {
         if (review)
             try {
                 const res = await deleteReview(review._id).unwrap();
+                console.log(res)
                 try{
                     dispatch(setReviews(res))
                 }   catch ( error) {
